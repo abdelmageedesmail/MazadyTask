@@ -22,9 +22,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideHomeRepository(
-        httpClient: MoviesApiClient,
+        apiClient: MoviesApiClient,
+        httpClient: HttpClient,
         favoriteMovieDao: FavoriteMovieDao
     ): HomeRepository =
-        HomeRepositoryImpl(httpClient, favoriteMovieDao)
+        HomeRepositoryImpl(apiClient, httpClient, favoriteMovieDao)
 
 }

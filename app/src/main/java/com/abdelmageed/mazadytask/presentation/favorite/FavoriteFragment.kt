@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdelmageed.mazadytask.databinding.FragmentFavoriteBinding
 import com.abdelmageed.mazadytask.extension.toFavoriteEntity
 import com.abdelmageed.mazadytask.extension.toMovieDto
+import com.abdelmageed.mazadytask.extension.visibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -71,7 +72,12 @@ class FavoriteFragment : Fragment() {
     private fun observer() {
         lifecycleScope.launch {
             viewModel.favoritesFlow.collectLatest { favoriteList ->
-                adapter.setList(favoriteList.map { it.toMovieDto() })
+                if (favoriteList.isNotEmpty()) {
+                    binding.noData.visibility(false)
+                    adapter.setList(favoriteList.map { it.toMovieDto() })
+                } else {
+                    binding.noData.visibility(true)
+                }
             }
         }
     }

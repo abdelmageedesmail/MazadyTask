@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
-    id ("androidx.navigation.safeargs.kotlin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -21,6 +21,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    externalNativeBuild {
+        cmake {
+            path("src/cpp/CMakeLists.txt")
+        }
     }
 
     buildTypes {
@@ -36,6 +43,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -43,6 +51,8 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    ndkVersion = "26.2.11394342"
 }
 
 dependencies {

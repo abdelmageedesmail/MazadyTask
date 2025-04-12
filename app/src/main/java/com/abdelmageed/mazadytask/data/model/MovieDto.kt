@@ -7,13 +7,11 @@ import kotlinx.parcelize.Parcelize
 data class MovieDto(
     val id: Int,
     val title: String?,
-    val year: Int?,
+    val year: String?,
     val poster: String?,
     val genres: String?,
-    val actors: String?,
+    val rating: Double?,
     val overview: String?,
-    val runtime: Int?,
-    val production: String?,
-    val awards: String?,
+
     val isFavoriteItem: Boolean = false
 ) : Parcelable

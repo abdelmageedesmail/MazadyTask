@@ -9,34 +9,38 @@ import coil.api.load
 import com.abdelmageed.mazadytask.R
 import com.abdelmageed.mazadytask.data.model.MovieDto
 import com.abdelmageed.mazadytask.data.remote.response.MoviesResponseItem
+import com.abdelmageed.mazadytask.databinding.ItemGridMovieBinding
 import com.abdelmageed.mazadytask.databinding.ItemMovieBinding
+import com.abdelmageed.mazadytask.extension.loadImage
 
 class MoviesAdapter(
     private val onClick: (MovieDto) -> Unit,
     val onFavoriteClick: (MovieDto) -> Unit
-) :
-    RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
-//    lateinit var binding: ItemMovieBinding
+) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     private var movies: MutableList<MovieDto> = mutableListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<MovieDto>) {
         movies.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun removeAll(){
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeAll() {
         movies.clear()
         notifyDataSetChanged()
     }
-    inner class MovieViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class MovieViewHolder(private val binding: ItemGridMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: MovieDto, position: Int) {
             binding.tvTitle.text = movie.title ?: ""
             binding.tvReleaseDate.text = "Release Year:${movie.year ?: ""}"
             binding.ivFavorite.setImageResource(R.drawable.ic_heart)
-            binding.ivPoster.load(movie.poster)
+            binding.ivPoster.loadImage(movie.poster ?: "")
             itemView.setOnClickListener {
                 onClick(movie)
             }
@@ -51,7 +55,7 @@ class MoviesAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-       val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemGridMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(binding)
     }
 

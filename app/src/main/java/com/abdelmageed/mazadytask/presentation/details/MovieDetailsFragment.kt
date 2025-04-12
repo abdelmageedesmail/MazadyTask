@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import coil.Coil
 import coil.api.load
 import com.abdelmageed.mazadytask.databinding.FragmentMovieDetailsBinding
+import com.abdelmageed.mazadytask.extension.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,14 +36,11 @@ class MovieDetailsFragment : Fragment() {
         binding.apply {
             val movie = args.movieItem
             Log.e("movieData", "$movie")
-            ivPoster.load(movie.poster)
+            ivPoster.loadImage(movie.poster ?: "")
             tvTitle.text = movie.title
             tvGenres.text = movie.genres
-            tvActors.text = movie.actors
             tvOverView.text = movie.overview
-            tvRunTime.text = "${movie.runtime}"
-            tvProduction.text = movie.production
-            tvAwards.text = movie.awards
+            tvRating.text = "${movie.rating}"
 
             ivBack.setOnClickListener {
                 findNavController().navigateUp()

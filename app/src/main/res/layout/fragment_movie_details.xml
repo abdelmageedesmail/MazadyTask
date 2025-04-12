@@ -28,155 +28,109 @@
                 android:text="Movie Details" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/imageGuideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".3" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/startGl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="15.dp" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/endGl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="15.dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cartPoster"
-            android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageGuideline"
-            app:layout_constraintEnd_toEndOf="@+id/endGl"
-            app:layout_constraintStart_toStartOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/toolBar">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolBar">
 
-            <ImageView
-                android:id="@+id/ivPoster"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY" />
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvOverViewTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="OverView"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/cartPoster" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/imageGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent=".3" />
 
-        <TextView
-            android:id="@+id/tvOverView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvOverViewTitle" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/startGl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="15.dp" />
 
-        <TextView
-            android:id="@+id/tvGenresTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Genres"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvOverView" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/endGl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="15.dp" />
 
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenresTitle" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cartPoster"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/endGl"
+                    app:layout_constraintStart_toStartOf="@id/startGl"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvActorsTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Actors"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
+                    <ImageView
+                        android:id="@+id/ivPoster"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY" />
+                </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/tvActors"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvActorsTitle" />
+                <TextView
+                    android:id="@+id/tvOverViewTitle"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="OverView"
+                    app:layout_constraintStart_toEndOf="@id/startGl"
+                    app:layout_constraintTop_toBottomOf="@+id/cartPoster" />
 
-        <TextView
-            android:id="@+id/tvRunTimeTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="RunTime :"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvActors" />
+                <TextView
+                    android:id="@+id/tvOverView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/endGl"
+                    app:layout_constraintStart_toEndOf="@id/startGl"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOverViewTitle" />
 
-        <TextView
-            android:id="@+id/tvRunTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/tvRunTimeTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvActors" />
+                <TextView
+                    android:id="@+id/tvGenresTitle"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Genres"
+                    app:layout_constraintStart_toEndOf="@id/startGl"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOverView" />
 
-        <TextView
-            android:id="@+id/tvProductionTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Production:"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvRunTime" />
+                <TextView
+                    android:id="@+id/tvGenres"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/endGl"
+                    app:layout_constraintStart_toEndOf="@id/startGl"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGenresTitle" />
 
-        <TextView
-            android:id="@+id/tvProduction"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/tvProductionTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvRunTime" />
+                <TextView
+                    android:id="@+id/tvRatingTitle"
+                    style="@style/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Rating :"
+                    app:layout_constraintStart_toEndOf="@id/startGl"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
 
-        <TextView
-            android:id="@+id/tvAwardsTitle"
-            style="@style/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Awards :"
-            app:layout_constraintStart_toEndOf="@id/startGl"
-            app:layout_constraintTop_toBottomOf="@+id/tvProduction" />
-
-        <TextView
-            android:id="@+id/tvAwards"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/endGl"
-            app:layout_constraintStart_toEndOf="@id/tvAwardsTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvProduction" />
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/endGl"
+                    app:layout_constraintStart_toEndOf="@id/tvRatingTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGenres" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

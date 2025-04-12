@@ -3,59 +3,47 @@ package com.abdelmageed.mazadytask.extension
 import com.abdelmageed.mazadytask.data.local.FavoritesMovieEntity
 import com.abdelmageed.mazadytask.data.model.MovieDto
 import com.abdelmageed.mazadytask.data.remote.response.MoviesResponseItem
+import com.abdelmageed.mazadytask.data.remote.response.ResultsItem
 
-fun MoviesResponseItem.toFavoriteEntity(): FavoritesMovieEntity {
+fun ResultsItem.toMovieDto() = MovieDto(
+    id = this.id ?: 0,
+    title = this.title ?: "",
+    poster = this.poster_path ?: "",
+    year = this.release_date ?: "",
+    genres = this.genres.joinToString(", "),
+    overview = this.overview,
+    rating = this.vote_average
+)
+
+fun ResultsItem.toFavoriteEntity(): FavoritesMovieEntity {
     return FavoritesMovieEntity(
         id = this.id ?: 0,
         title = this.title ?: "",
-        poster = this.poster ?: "",
-        year = this.year ?: 0,
-        rating = this.rating ?: 0.0,
-        genre = this.genre?.joinToString(", ") ?: "",
-        actress = this.actors?.joinToString(",") ?: "",
-        overview = this.plot ?: "",
-        runtime = this.runtime ?: 0,
-        production = this.production ?: "",
-        awards = this.awards ?: ""
+        poster = this.poster_path ?: "",
+        year = this.release_date ?: "",
+        rating = this.vote_average ?: 0.0,
+        genre = this.genres.joinToString(", "),
+        overview = this.overview ?: ""
     )
 }
 
-fun MoviesResponseItem.toMovieDto() = MovieDto(
-    id = this.id ?: 0,
-    title = this.title ?: "",
-    poster = this.poster ?: "",
-    year = this.year ?: 0,
-    genres = this.genre?.joinToString(", ") ?: "",
-    actors = this.actors?.joinToString(", ") ?: "",
-    overview = this.plot ?: "",
-    runtime = this.runtime ?: 0,
-    production = this.production ?: "",
-    awards = this.awards ?: ""
-)
 
 fun FavoritesMovieEntity.toMovieDto() = MovieDto(
-    id = this.id ?: 0,
-    title = this.title ?: "",
-    poster = this.poster ?: "",
-    year = this.year ?: 0,
+    id = this.id,
+    title = this.title,
+    poster = this.poster,
+    year = this.year,
     genres = this.genre,
-    actors = this.actress,
-    overview = this.overview,
-    runtime = this.runtime,
-    production = this.production,
-    awards = this.awards
+    rating = this.rating,
+    overview = this.overview
 )
 
 fun MovieDto.toFavoriteEntity() = FavoritesMovieEntity(
     id = this.id ?: 0,
     title = this.title ?: "",
     poster = this.poster ?: "",
-    year = this.year ?: 0,
-    rating = 0.0,
+    year = "",
+    rating = this.rating ?: 0.0,
     genre = this.genres ?: "",
-    actress = actors,
     overview = overview,
-    runtime = runtime,
-    production = production,
-    awards = awards
 )

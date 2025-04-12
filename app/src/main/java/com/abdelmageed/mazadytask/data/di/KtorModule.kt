@@ -28,11 +28,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object KtorModule {
 
+    init {
+        System.loadLibrary("native-lib")
+    }
+
+    private external fun getBaseUrl(): String
+
     @Singleton
     @Provides
-    fun provideHttpClient(
-        @ApplicationContext context: Context
-    ): HttpClient {
+    fun provideHttpClient(): HttpClient {
 
         return HttpClient(Android) {
 
@@ -45,7 +49,7 @@ object KtorModule {
                 level = LogLevel.ALL
             }
             install(DefaultRequest) {
-                url("https://www.freetestapi.com/")
+                url(getBaseUrl())
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
             install(ContentNegotiation) {

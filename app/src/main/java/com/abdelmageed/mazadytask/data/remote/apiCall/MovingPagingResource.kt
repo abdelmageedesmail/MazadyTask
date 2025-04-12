@@ -4,18 +4,19 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.abdelmageed.mazadytask.data.remote.BaseResult
 import com.abdelmageed.mazadytask.data.remote.response.MoviesResponseItem
+import com.abdelmageed.mazadytask.data.remote.response.ResultsItem
 
 class MovingPagingResource(private val apiClient: MoviesApiClient) :
-    PagingSource<Int, MoviesResponseItem>() {
+    PagingSource<Int, ResultsItem>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesResponseItem> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResultsItem> {
         val page = params.key ?: STARTING_PAGE_INDEX
         val limit = params.loadSize
 //        val limit = 10
 
         return when (val result = apiClient.getMovies(page, limit)) {
             is BaseResult.Success -> {
-                val data = result.data
+                val data = result.data.results
                 val nextKey = if (data.isEmpty()) null
                 else {
                     page + 1
@@ -25,8 +26,8 @@ class MovingPagingResource(private val apiClient: MoviesApiClient) :
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 LoadResult.Page(
                     data = data,
-                    prevKey = prevKey /*if (page == 1) null else page - 1*/,
-                    nextKey = nextKey /*if (data.isEmpty()) null else page + 1*/
+                    prevKey = prevKey,
+                    nextKey = nextKey
                 )
             }
 
@@ -36,7 +37,7 @@ class MovingPagingResource(private val apiClient: MoviesApiClient) :
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, MoviesResponseItem>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, ResultsItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

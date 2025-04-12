@@ -1,6 +1,7 @@
 package com.abdelmageed.mazadytask.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdelmageed.mazadytask.R
 import com.abdelmageed.mazadytask.databinding.FragmentHomeBinding
 import com.abdelmageed.mazadytask.extension.toMovieDto
+import com.abdelmageed.mazadytask.extension.visibility
+import com.abdelmageed.mazadytask.util.NetworkMonitor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -23,6 +27,9 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: MoviePagingAdapter
+    private var viewType: Int = 0
+    private lateinit var networkMonitor: NetworkMonitor
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +53,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        networkMonitor = NetworkMonitor(requireActivity())
+
+        networkMonitor.isConnected.observe(requireActivity()) { isConnected ->
+            if (isConnected) {
+                viewModel.getMovies()
+            }
+        }
+
+        networkMonitor.startMonitoring()
+
         return binding.root
     }
 
@@ -53,17 +70,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         binding.apply {
-
             binding.rvMovies.adapter = adapter
             binding.rvMovies.layoutManager = LinearLayoutManager(requireActivity())
             binding.ivGrid.setOnClickListener {
-                binding.rvMovies.adapter = adapter
-                binding.rvMovies.layoutManager = GridLayoutManager(requireActivity(), 2)
+                viewModel.isGridLayout = true
+                setupRecyclerView()
             }
 
             binding.ivList.setOnClickListener {
-                binding.rvMovies.adapter = adapter
-                binding.rvMovies.layoutManager = LinearLayoutManager(requireActivity())
+                viewModel.isGridLayout = false
+                setupRecyclerView()
             }
             binding.ivHeart.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoriteFragment())
@@ -71,10 +87,36 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvMovies.layoutManager = if (viewModel.isGridLayout) {
+            GridLayoutManager(requireContext(), 2)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
+        binding.rvMovies.adapter = adapter
+
+        binding.rvMovies.post {
+            viewModel.recyclerViewState?.let {
+                binding.rvMovies.layoutManager?.onRestoreInstanceState(it)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.recyclerViewState = binding.rvMovies.layoutManager?.onSaveInstanceState()
+    }
+
     private fun observer() {
         lifecycleScope.launch {
             viewModel.moviesFlow.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
+
             }
         }
     }

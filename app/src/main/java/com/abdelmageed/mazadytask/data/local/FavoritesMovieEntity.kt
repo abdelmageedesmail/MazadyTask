@@ -9,13 +9,8 @@ data class FavoritesMovieEntity(
     val id: Int,
     val title: String,
     val poster: String,
-    val year: Int,
+    val year: String,
     val rating: Double,
     val genre: String,
-    val actress: String?,
-    val overview: String?,
-    val runtime: Int?,
-    val production: String?,
-    val awards: String?
-
+    val overview: String?
 )

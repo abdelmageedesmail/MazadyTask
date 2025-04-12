@@ -15,10 +15,10 @@
 
             <ImageView
                 android:id="@+id/ivPoster"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-
-                app:layout_constraintDimensionRatio=".5:.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,19 +40,18 @@
                 android:layout_marginTop="10.dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                app:layout_constraintBottom_toTopOf="@+id/tvReleaseDate"
-                app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
-                app:layout_constraintStart_toEndOf="@+id/ivPoster" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPoster" />
 
             <TextView
                 android:id="@+id/tvReleaseDate"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivPoster"
-                app:layout_constraintTop_toTopOf="@+id/ivPoster" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
